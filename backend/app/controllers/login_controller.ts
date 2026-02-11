@@ -24,6 +24,7 @@ export default class LoginsController {
       user: {
         id: user.id,
         email: user.email,
+        full_name: user.full_name,
         nivel: user.nivel
       }
     })

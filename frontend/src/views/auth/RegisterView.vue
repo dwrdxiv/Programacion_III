@@ -1,26 +1,23 @@
 <template>
-  <div class="auth-container">
-
-    <h2>Registro de Usuario</h2>
-    <form @submit.prevent="handleRegister">
-      <input v-model="form.email" type="email" placeholder="Correo electrónico" required />
-      <input v-model="form.full_name" type="text" placeholder="Nombre y Apellido" required />
-      <input v-model="form.password" type="password" placeholder="Contraseña (mín. 8 caracteres)" required />
-      
-     <!-- <div class="field">
-        <label>Nivel de acceso:</label>
-        <select v-model="form.nivel">
-          <option value="usuario">Usuario</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div> -->
-
-      <button type="submit" :disabled="loading">Registrar</button>
-    </form>
+  <body class="background">
     
-    <p v-if="message" :class="{ 'error': isError }">{{ message }}</p>
-    <router-link to="/login">¿Ya tienes cuenta? Inicia sesión</router-link>
-  </div>
+  
+    <div class="auth-container">
+      <h2>Registro de Usuario</h2>
+      <form @submit.prevent="handleRegister">
+        <input v-model="form.email" type="email" placeholder="Correo electrónico" required />
+        <input v-model="form.full_name" type="text" placeholder="Nombre y Apellido" required />
+        <input v-model="form.password" type="password" placeholder="Contraseña (mín. 8 caracteres)" required />
+        <button type="submit" :disabled="loading">Registrar</button>
+      </form>
+      
+      <p v-if="message" :class="{ 'error': isError }">{{ message }}</p>
+      <br>
+      <router-link to="/login" class="goLogin">¿Ya tienes cuenta? Inicia sesión</router-link>
+      <button class="volver" @click="router.push('/')" style="margin: auto;">Volver</button>
+
+    </div>
+  </body>
 </template>
 
 <script setup>
@@ -59,9 +56,16 @@ const handleRegister = async () => {
 </script>
 
 <style scoped>
-.auth-container { max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; }
-.field { margin: 15px 0; }
+.background { background-image: linear-gradient(to bottom, #0e191f, #093453); height: 60rem; display: flex; align-items: center;}
+.auth-container {width: 20rem; height: 22rem; margin: auto; margin-top: 100px; padding: 3rem; border: 2px solid #29dbff; border-radius: 10px; background: #ffffff; text-align: center; }
 .error { color: red; }
-button { width: 100%; padding: 10px; cursor: pointer; }
-input, select { width: 100%; margin-bottom: 10px; padding: 8px; }
+.auth-container button { font-family: Arial, Helvetica, sans-serif; border-color: rgb(0, 107, 41);background: rgb(3, 255, 167); border: 15; border-radius: 10px ; padding: 0.5rem 1rem; cursor: pointer; width: 90%; padding: 0.5rem; cursor: pointer; margin-top: 1rem; }
+.auth-container button:hover { background: rgb(0, 177, 153); color: rgb(255, 255, 255); border-color: rgb(0, 50, 33); transition-duration: 400ms; }
+input, select { width: 90%; margin-bottom: 1rem; padding: 0.5rem; }
+
+.auth-container .volver {width: 50%; background: none; border: none; margin-top: 1rem; color: rgb(0, 65, 98); cursor: pointer; text-decoration: none; }
+.auth-container .volver:hover {background-color: gray; color: rgb(255, 255, 255); transition-duration: 400ms; }
+
+.goLogin { font-family: Arial, Helvetica, sans-serif; color: rgb(0, 65, 98); background: none; border: none; cursor: pointer; text-decoration: none; }
+.goLogin:hover { color: rgb(0, 0, 0); transition-duration: 200ms; font-size: 1.1rem; }
 </style>

@@ -15,7 +15,7 @@
 
     <div class="minimenu">
       <button @click="router.push('/')">Inicio</button>
-      <button>Productos</button>
+      <button @click="router.push('/products')">Productos</button>
       <button>Carrito</button>
     </div>
 

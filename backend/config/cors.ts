@@ -2,7 +2,7 @@ import { defineConfig } from '@adonisjs/cors'
 
 const corsConfig = defineConfig({
   enabled: true, // Debe estar en true
-  origin: ['http://localhost:5173'], // Aquí va la URL de tu proyecto de Vue
+  origin: true, // Aquí va la URL de tu proyecto de Vue
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   headers: [
     'Content-Type',

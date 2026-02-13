@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:3333', // La URL por defecto de Adonis
+  baseURL: 'https://programacion-iii-l7b3.onrender.com', // La URL por defecto de Adonis
   headers: {
     'Content-Type': 'application/json'
   }

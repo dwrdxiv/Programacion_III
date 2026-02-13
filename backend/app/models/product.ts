@@ -15,6 +15,9 @@ export default class Product extends BaseModel {
   declare precio: number
 
   @column()
+  declare unidades: number
+
+  @column()
   declare descripcion: string | null
   
   @column.dateTime({ autoCreate: true })

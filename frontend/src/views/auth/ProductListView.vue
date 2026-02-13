@@ -8,7 +8,7 @@
         <div class="minimenu">
         <button @click="router.push('/')">Inicio</button>
         <button @click="router.push('/products')">Productos</button>
-        <button>Carrito</button>
+        <button @click="router.push('/cart')">Carrito</button>
         </div>
     </div>
     <div class="background">
@@ -19,6 +19,7 @@
                     <input v-model="form.nombre" placeholder="Nombre" required style="width: auto;" /> <br>
                     <input v-model="form.codigo" placeholder="Código" required style="width: auto;"/> <br>
                     <input v-model.number="form.precio" type="number" step="1" placeholder="Precio" required style="width: 3rem;"/> <br>
+                    <input v-model.number="form.unidades" type="number" step="1" placeholder="Unidades" required style="width: 3rem;"/> <br>
                     <textarea v-model="form.descripcion" placeholder="Descripción" style="width: auto; height: 1rem;"></textarea><br>
                     <button type="submit" style="background-color: greenyellow; cursor: pointer; width: 100%;">Guardar Producto</button>
                 </form>
@@ -34,6 +35,7 @@
           <th>Código</th>
           <th>Nombre</th>
           <th>Precio</th>
+          <th>Unidades</th>
           <th>Descripción</th>
           <th>Acciones</th>
         </tr>
@@ -43,10 +45,11 @@
           <td><strong>{{ prod.codigo }}</strong></td>
           <td>{{ prod.nombre }}</td>
           <td>{{ prod.precio }} $</td>
+          <td>{{ prod.unidades }}</td>
           <td>{{ prod.descripcion || 'Sin descripción' }}</td>
           <td>
             <div class="actions-cell">
-              <button class="btn-cart" title="Añadir al carrito" style="background-color: greenyellow; cursor: pointer;">
+              <button  @click="agregarAlCarrito(prod)"  class="btn-cart" title="Añadir al carrito" style="background-color: greenyellow; cursor: pointer;">
                 🛒
               </button>
 
@@ -74,15 +77,24 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { useCartStore } from '@/stores/cart'
 import api from '@/services/api'
 
 const auth = useAuthStore()
+const cart = useCartStore()
 const products = ref([])
 const error = ref('')
-const form = reactive({ nombre: '', codigo: '', precio: 0, descripcion: '' })
+const form = reactive({ nombre: '', codigo: '', precio: 0, descripcion: '', unidades: 0 })
 const router = useRouter()
 
-
+const agregarAlCarrito = async (producto) => {
+  try {
+    await cart.addToCart(producto.id)
+    alert(`¡${producto.nombre} añadido al carrito!`)
+  } catch (error) {
+    alert('No se pudo añadir el producto')
+  }
+}
 
 const fetchProducts = async () => {
   const res = await api.get('/api/products')
@@ -98,7 +110,7 @@ const saveProduct = async () => {
     }
     await api.post('/api/products', form)
     fetchProducts() // Recargar lista
-    Object.assign(form, { nombre: '', codigo: '', precio: 0, descripcion: '' }) // Limpiar
+    Object.assign(form, { nombre: '', codigo: '', precio: 0, descripcion: '', unidades: 0 }) // Limpiar
   } catch (err) {
     error.value = err.response?.data?.message || "Error al guardar"
   }

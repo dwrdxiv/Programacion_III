@@ -16,11 +16,15 @@ export default class ProductsController {
       return response.forbidden({ message: 'No tienes permisos de administrador' })
     }
 
-    const data = request.only(['nombre', 'codigo', 'precio', 'descripcion'])
+    const data = request.only(['nombre', 'codigo', 'precio', 'descripcion', 'unidades'])
 
     // Validación precio > 0 (15 pts)
     if (data.precio <= 0) {
       return response.badRequest({ message: 'El precio debe ser mayor a 0' })
+    }
+
+    if (data.unidades < 0) {
+      return response.badRequest({ message: 'Las unidades no pueden ser negativas' })
     }
 
     const product = await Product.create(data)

@@ -9,6 +9,7 @@ export default class extends BaseSchema {
     table.string('nombre').notNullable()
     table.string('codigo').notNullable().unique() // Código único
     table.decimal('precio', 10, 2).notNullable()
+    table.integer('unidades').notNullable().defaultTo(0)
     table.text('descripcion').nullable()
     table.timestamp('created_at')
     table.timestamp('updated_at')

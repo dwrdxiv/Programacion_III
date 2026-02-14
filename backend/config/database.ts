@@ -6,7 +6,7 @@ const dbConfig = defineConfig({
     sqlite: {
       client: 'better-sqlite3',
       connection: {
-        filename: '.tmp/db.sqlite3',
+        filename: 'tmp/db.sqlite3',
       },
       useNullAsDefault: true,
       migrations: {
